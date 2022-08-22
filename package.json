@@ -1,17 +1,18 @@
 {
-  "name": "littledb",
+  "name": "mateusproto-badbank",
   "version": "1.0.0",
-  "description": "lowdb sample for 1.125",
+  "description": "MIT Capstone - Full-Stack Banking Application",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "jest"
   },
-  "author": "abel@mit.edu",
+  "author": "mrprot@gmail.com",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "lowdb": "^1.0.0",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "nodemon": "^2.0.19"
   }
 }
