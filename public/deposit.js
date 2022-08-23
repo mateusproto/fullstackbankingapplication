@@ -1,6 +1,6 @@
 function Deposit(){
   const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');  
+  const [status, setStatus] = React.useState('');
 
   return (
     <Card
@@ -31,6 +31,7 @@ function DepositMsg(props){
 function DepositForm(props){
   const [email, setEmail]   = React.useState('');
   const [amount, setAmount] = React.useState('');
+  const { user } = React.useContext(UserContext);  
 
   function handle(){
     fetch(`/account/update/${email}/${amount}`)
@@ -54,7 +55,7 @@ function DepositForm(props){
     <input type="input" 
       className="form-control" 
       placeholder="Enter email" 
-      value={email} onChange={e => setEmail(e.currentTarget.value)}/><br/>
+      value={user.email} onChange={e => setEmail(e.currentTarget.value)}/><br/>
       
     Amount<br/>
     <input type="number" 

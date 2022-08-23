@@ -9,7 +9,7 @@ app.use(express.static('public'));
 app.use(cors());
 
 // create user account
-app.get('/account/create/:name/:email/:password', function (req, res) {
+app.get('/account/create/:name/:email/:password/:uid', function (req, res) {
 
     // check if account exists
     dal.find(req.params.email).
@@ -22,7 +22,7 @@ app.get('/account/create/:name/:email/:password', function (req, res) {
             }
             else{
                 // else create user
-                dal.create(req.params.name,req.params.email,req.params.password).
+                dal.create(req.params.name,req.params.email,req.params.password,req.params.uid).
                     then((user) => {
                         console.log(user);
                         res.send(user);            

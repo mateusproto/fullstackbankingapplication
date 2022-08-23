@@ -1,6 +1,6 @@
 function Login(){
   const [show, setShow]     = React.useState(true);
-  const [status, setStatus] = React.useState('');    
+  const [status, setStatus] = React.useState(''); 
 
   return (
     <Card
@@ -19,7 +19,9 @@ function LoginMsg(props){
     <h5>Success</h5>
     <button type="submit" 
       className="btn btn-light" 
-      onClick={() => props.setShow(true)}>
+      onClick={() => {
+        firebase.auth().signOut(); 
+        props.setShow(true)}}>
         Authenticate again
     </button>
   </>);
@@ -28,21 +30,34 @@ function LoginMsg(props){
 function LoginForm(props){
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
+  const { login } = React.useContext(UserContext);
 
   function handle(){
-    fetch(`/account/login/${email}/${password}`)
-    .then(response => response.text())
-    .then(text => {
-        try {
-            const data = JSON.parse(text);
-            props.setStatus('');
-            props.setShow(false);
-            console.log('JSON:', data);
-        } catch(err) {
-            props.setStatus(text)
-            console.log('err:', text);
-        }
-    });
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(`user: ${user.email}`);
+        fetch(`/account/login/${email}/${password}`)
+        .then(response => response.text())
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                props.setStatus('');
+                props.setShow(false);
+                console.log('JSON:', data);
+                login(data.name, data.email);
+              } catch(err) {
+                props.setStatus(text)
+                console.log('err:', text);
+            }
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.log(error.message);
+      });
   }
 
 

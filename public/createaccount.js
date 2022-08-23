@@ -19,7 +19,11 @@ function CreateMsg(props){
     <h5>Success</h5>
     <button type="submit" 
       className="btn btn-light" 
-      onClick={() => props.setShow(true)}>Add another account</button>
+      onClick={() => {
+        firebase.auth().signOut();
+        props.setShow(true)}}>
+        Add another account
+    </button>
   </>);
 }
 
@@ -30,13 +34,28 @@ function CreateForm(props){
 
   function handle(){
     console.log(name,email,password);
-    const url = `/account/create/${name}/${email}/${password}`;
-    (async () => {
-        var res  = await fetch(url);
-        var data = await res.json();    
-        console.log(data);        
-    })();
-    props.setShow(false);
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const uid = user.uid;
+        console.log(user);
+        const url = `/account/create/${name}/${email}/${password}/${uid}`;
+        (async () => {
+            var res  = await fetch(url);
+            var data = await res.json();    
+            console.log(data);   
+            props.setShow(false);
+     
+        })();
+      })
+      .catch((error) => {
+        alert(error.message);
+        console.log(error.message);
+      });
+
   }    
 
   return (<>
