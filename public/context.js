@@ -17,7 +17,7 @@ firebase.initializeApp(firebaseConfig);
  
 const UserProvider = ({ children }) => {
   // User is the name of the "data" that gets stored in context
-  const [user, setUser] = React.useState({ name: '', email: '', auth: false });
+  const [user, setUser] = React.useState({ name: '', email: '', balance: 0, auth: false });
 
   // Login updates the user data with a name parameter
   const login = (name, email, balance) => {

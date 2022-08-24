@@ -1,13 +1,38 @@
-var express = require('express');
-var app     = express();
-var cors    = require('cors');
-var dal     = require('./dal.js');
-const e = require('express');
+var express         = require('express');
+var app             = express();
+var cors            = require('cors');
+var dal             = require('./dal.js');
+const e             = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'MIT Capstone - Full-Stack Banking Application',
+            version: '1.0.0'
+        }
+    },
+    apis: ['./index.js']
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // used to serve static files from public directory
 app.use(express.static('public'));
 app.use(cors());
 
+/**
+ * @swagger
+ * /account/create:
+ *  get:
+ *      description: Create user account
+ *      responses:
+ *          200:
+ *              description: Success
+ */
 // create user account
 app.get('/account/create/:name/:email/:password/:uid', function (req, res) {
 
@@ -32,7 +57,21 @@ app.get('/account/create/:name/:email/:password/:uid', function (req, res) {
         });
 });
 
-
+/**
+ * @swagger
+ * paths:
+ *  /account/login/{email}/{password}:
+ *      get:
+ *          description: Log the user in
+ *          parameters:
+ *              - in: path
+ *                name: email
+ *              - in: path
+ *                name: password
+ *          responses:
+ *              200:
+ *                  description: Success
+ */
 // login user 
 app.get('/account/login/:email/:password', function (req, res) {
 
@@ -55,6 +94,19 @@ app.get('/account/login/:email/:password', function (req, res) {
     
 });
 
+/**
+ * @swagger
+ * paths:
+ *  /account/find/{email}:
+ *      get:
+ *          description: Find user account
+ *          parameters:
+ *              - in: path
+ *                name: email
+ *          responses:
+ *              200:
+ *                  description: Success
+ */
 // find user account
 app.get('/account/find/:email', function (req, res) {
 
@@ -75,7 +127,21 @@ app.get('/account/findOne/:email', function (req, res) {
     });
 });
 
-
+/**
+ * @swagger
+ * paths:
+ *  /account/update/{email}/{amount}:
+ *      get:
+ *          description: Update balance (deposit/withdraw)
+ *          parameters:
+ *              - in: path
+ *                name: email
+ *              - in: path
+ *                name: amount
+ *          responses:
+ *              200:
+ *                  description: Success
+ */
 // update - deposit/withdraw amount
 app.get('/account/update/:email/:amount', function (req, res) {
 
@@ -88,6 +154,15 @@ app.get('/account/update/:email/:amount', function (req, res) {
     });    
 });
 
+/**
+ * @swagger
+ * /account/all:
+ *  get:
+ *      description: Get all accounts
+ *      responses:
+ *          200:
+ *              description: Success
+ */
 // all accounts
 app.get('/account/all', function (req, res) {
 

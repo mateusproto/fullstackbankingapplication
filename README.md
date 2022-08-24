@@ -19,6 +19,8 @@ Technology used:
 - Node.js 17.3.1
 - Nodemon 2.0.19
 - React 18.2.0
+- Swagger-jsdoc 6.2.5
+- Swagger-ui-express 4.5.0
 
 Features:
 - Create a new account
