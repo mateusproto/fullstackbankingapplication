@@ -5,12 +5,12 @@ const UseEffect = React.UseEffect;
 const UserContext = React.createContext();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBpQW23Go-IExXQ13AvlOEIr-5EaOAIEGk",
-  authDomain: "mateusproto-badbank-e4d70.firebaseapp.com",
-  projectId: "mateusproto-badbank-e4d70",
-  storageBucket: "mateusproto-badbank-e4d70.appspot.com",
-  messagingSenderId: "348060295130",
-  appId: "1:348060295130:web:e8870ebed22dd196896ae3"
+  apiKey: "AIzaSyCq8tgBaARoQQZz7KEJ0iju5iq-8rRfSxY",
+  authDomain: "fullstackbankingapplication.firebaseapp.com",
+  projectId: "fullstackbankingapplication",
+  storageBucket: "fullstackbankingapplication.appspot.com",
+  messagingSenderId: "29611998247",
+  appId: "1:29611998247:web:d8f53245449070343c2202"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -20,13 +20,14 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState({ name: '', email: '', auth: false });
 
   // Login updates the user data with a name parameter
-  const login = (name, email) => {
+  const login = (name, email, balance) => {
     setUser((user) => ({
       name: name,
       email: email,
+      balance: balance,
       auth: true,
     }));
-    console.log(`login: ${name}`);
+    console.log(`login: ${name}, ${email}, ${balance}`);
   };
 
   // Logout updates the user data to default
@@ -34,8 +35,10 @@ const UserProvider = ({ children }) => {
     setUser((user) => ({
       name: '',
       email: '',
+      balance: '',
       auth: false,
     }));
+    console.log(`logout: ${name}, ${email}, ${balance}`);
   };
 
   return (

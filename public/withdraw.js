@@ -14,6 +14,14 @@ function Withdraw(){
   )
 }
 
+function WithdrawValidate(amount){ 
+  if (!amount || amount <= 0  || amount === 0  || amount === '00' || isNaN(parseFloat(amount))) {
+    return false;
+  } 
+  return true;
+
+}
+
 function WithdrawMsg(props){
   return(<>
     <h5>Success</h5>
@@ -29,23 +37,41 @@ function WithdrawMsg(props){
 }
 
 function WithdrawForm(props){
-  const [email, setEmail]   = React.useState('');
+  //const [email, setEmail]   = React.useState('');
   const [amount, setAmount] = React.useState('');
+  const { user } = React.useContext(UserContext);  
+  console.log(user.balance);
 
   function handle(){
-    fetch(`/account/update/${email}/-${amount}`)
-    .then(response => response.text())
-    .then(text => {
-        try {
-            const data = JSON.parse(text);
-            props.setStatus(JSON.stringify(data.value));
-            props.setShow(false);
-            console.log('JSON:', data);
-        } catch(err) {
-            props.setStatus('Deposit failed')
-            console.log('err:', text);
-        }
-    });
+    if(WithdrawValidate(amount)) {
+      if (user.balance - amount >= 0) {  
+        fetch(`/account/update/${user.email}/-${amount}`)
+        .then(response => response.text())
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                props.setStatus(JSON.stringify(data.value));
+                props.setShow(false);
+                console.log('JSON:', data);
+                user.balance = JSON.stringify(data.value.balance);
+                console.log(user.balance);
+  
+            } catch(err) {
+                props.setStatus('Withdraw failed')
+                console.log('err:', text);
+                setTimeout(() => props.setStatus(''),3000);
+            }
+        });
+      } else {
+        props.setStatus('Withdraw failed, not enough balance')
+        console.log('err:', props.status);
+        setTimeout(() => props.setStatus(''),3000);
+      }
+    } else {
+      props.setStatus('Withdraw failed, invalid amount')
+      console.log('err:', props.status);
+      setTimeout(() => props.setStatus(''),3000);
+    }
   }
 
 
@@ -54,8 +80,9 @@ function WithdrawForm(props){
     Email<br/>
     <input type="input" 
       className="form-control" 
+      disabled
       placeholder="Enter email" 
-      value={email} 
+      value={user.email} 
       onChange={e => setEmail(e.currentTarget.value)}/><br/>
 
     Amount<br/>

@@ -31,6 +31,7 @@ function CreateForm(props){
   const [name, setName]         = React.useState('');
   const [email, setEmail]       = React.useState('');
   const [password, setPassword] = React.useState('');
+  const { login } = React.useContext(UserContext);
 
   function handle(){
     console.log(name,email,password);
@@ -48,7 +49,7 @@ function CreateForm(props){
             var data = await res.json();    
             console.log(data);   
             props.setShow(false);
-     
+            login(data.name, data.email, data.balance);
         })();
       })
       .catch((error) => {

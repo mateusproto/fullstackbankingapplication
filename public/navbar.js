@@ -89,7 +89,7 @@ function NavBarLoggedIn(){
                 <a className="nav-link" href="#/alldata/">AllData</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#/logout/">Welcome {user.name}</a>
+                <a className="nav-link" href="#/logout/">Logout {user.name}</a>
               </li>          
             </ul>
           </div>

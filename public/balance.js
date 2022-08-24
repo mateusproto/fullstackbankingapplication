@@ -30,11 +30,13 @@ function BalanceMsg(props){
 }
 
 function BalanceForm(props){
-  const [email, setEmail]   = React.useState('');
+  //const [email, setEmail]   = React.useState('');
   const [balance, setBalance] = React.useState('');  
+  const { user } = React.useContext(UserContext);  
+  console.log(user.balance);
 
   function handle(){
-    fetch(`/account/findOne/${email}`)
+    fetch(`/account/findOne/${user.email}`)
     .then(response => response.text())
     .then(text => {
         try {
@@ -43,6 +45,7 @@ function BalanceForm(props){
             props.setShow(false);
             setBalance(user.balance);
             console.log('JSON:', data);
+            
         } catch(err) {
             props.setStatus(text)
             console.log('err:', text);
@@ -55,8 +58,9 @@ function BalanceForm(props){
     Email<br/>
     <input type="input" 
       className="form-control" 
+      disabled
       placeholder="Enter email" 
-      value={email} 
+      value={user.email} 
       onChange={e => setEmail(e.currentTarget.value)}/><br/>
 
     <button type="submit" 

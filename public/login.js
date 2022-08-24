@@ -47,7 +47,7 @@ function LoginForm(props){
                 props.setStatus('');
                 props.setShow(false);
                 console.log('JSON:', data);
-                login(data.name, data.email);
+                login(data.name, data.email, data.balance);
               } catch(err) {
                 props.setStatus(text)
                 console.log('err:', text);
