@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-const url         = 'mongodb://localhost:27017';
-let db            = null;
+const url         = process.env.MONGOURI ||  'mongodb://localhost:27017';
+let db            = new MongoClient(url);
  
 // connect to mongo
 MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
