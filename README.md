@@ -2,7 +2,7 @@
 
 Project Title: MIT Capstone - Full-Stack Banking Application
 
-Description/Motivation: Develop a full stack application using Express and Node.js to integrate Backend, Database and Frontend; MongoDB as database for persistent store; and Bootstrap with React for Frontend
+Description/Motivation: Develop a full stack application using Express and Node.js to integrate Backend, Database and Frontend; MongoDB as database; and Bootstrap with React for Frontend
 
 Installation Guidelines: 
 - git clone
