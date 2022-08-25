@@ -26,12 +26,21 @@ app.use(cors());
 
 /**
  * @swagger
- * /account/create:
- *  get:
- *      description: Create user account
- *      responses:
- *          200:
- *              description: Success
+ *  /account/create/{name}/{email}/{password}/{uid}:
+ *      get:
+ *          description: Log the user in
+ *          parameters:
+ *              - in: path
+ *                name: name
+ *              - in: path
+ *                name: email
+ *              - in: path
+ *                name: password
+ *              - in: path
+ *                name: uid
+ *          responses:
+ *              200:
+ *                  description: Success
  */
 // create user account
 app.get('/account/create/:name/:email/:password/:uid', function (req, res) {
