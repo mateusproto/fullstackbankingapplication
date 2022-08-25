@@ -50,6 +50,7 @@ function CreateForm(props){
             console.log(data);   
             props.setShow(false);
             login(data.name, data.email, data.balance);
+            alert('Account created successfully');
         })();
       })
       .catch((error) => {
